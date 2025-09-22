@@ -1,0 +1,43 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function ownerEmails() {
+      return ['owner@example.com', 'cousin@example.com'];
+    }
+
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email != null;
+    }
+
+    function hasAppCheck() {
+      return request.auth != null && request.auth.token.app_check == true;
+    }
+
+    function isOwner() {
+      return isSignedIn() && lower(request.auth.token.email) in ownerEmails();
+    }
+
+    function validBooking() {
+      return request.resource.data.keys().hasOnly(['name', 'email', 'from', 'to', 'note', 'createdAt', 'ownerEmail'])
+        && request.resource.data.name is string
+        && request.resource.data.email is string
+        && request.resource.data.ownerEmail is string
+        && request.resource.data.note is string
+        && request.resource.data.from is timestamp
+        && request.resource.data.to is timestamp
+        && request.resource.data.createdAt is timestamp
+        && request.resource.data.name.size() > 0
+        && request.resource.data.name.size() <= 80
+        && request.resource.data.note.size() <= 300
+        && request.resource.data.email.size() > 0
+        && request.resource.data.from <= request.resource.data.to;
+    }
+
+    match /bookings/{bookingId} {
+      allow read: if true;
+      allow create: if isSignedIn() && hasAppCheck() && validBooking();
+      allow delete: if hasAppCheck() && isOwner();
+      allow update: if false;
+    }
+  }
+}

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Ferienhaus Belegungsplan</title>
+  <meta name="description" content="Familienfreundlicher Belegungsplan f&uuml;r das Ferienhaus." />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.13/main.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.13/main.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/multimonth@6.1.13/main.min.css" />
+  <link rel="stylesheet" href="./assets/styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="branding">
+      <h1>Ferienhaus Belegungsplan</h1>
+      <p class="tagline">Gemeinsam planen, klar bleiben.</p>
+    </div>
+    <div class="auth-panel">
+      <div class="auth-status" aria-live="polite">
+        <span id="user-email" class="auth-email">Nicht angemeldet</span>
+      </div>
+      <div class="auth-actions">
+        <button id="login-toggle-btn" class="button secondary">Anmelden</button>
+        <button id="logout-btn" class="button secondary hidden">Abmelden</button>
+      </div>
+      <form id="login-form" class="auth-form hidden" novalidate>
+        <label for="login-email">E-Mail-Adresse</label>
+        <div class="auth-form-row">
+          <input id="login-email" name="login-email" type="email" autocomplete="email" required placeholder="beispiel@familie.de" />
+          <button type="submit" class="button primary">Login-Link senden</button>
+        </div>
+        <p class="form-hint">Sie erhalten einen sicheren Anmeldelink per E-Mail.</p>
+      </form>
+      <p id="login-message" class="form-message" role="status"></p>
+    </div>
+  </header>
+
+  <main class="app-main">
+    <section class="calendar-section" aria-label="Kalenderansicht">
+      <div class="section-header">
+        <h2>Kalender&uuml;bersicht</h2>
+        <div class="section-controls">
+          <div class="legend" aria-label="Legende">
+            <span class="legend-item busy"><span class="legend-dot"></span>Belegt</span>
+            <span class="legend-item free"><span class="legend-dot"></span>Frei</span>
+          </div>
+          <div class="view-toggle" role="group" aria-label="Kalenderansicht ausw&auml;hlen">
+            <button type="button" class="button secondary view-toggle-btn is-active" data-view="dayGridMonth">Monat</button>
+            <button type="button" class="button secondary view-toggle-btn" data-view="multiMonthYear">Jahr</button>
+          </div>
+        </div>
+      </div>
+      <div id="calendar" class="calendar"></div>
+    </section>
+
+    <section class="form-section" aria-label="Neue Buchung">
+      <h2>Buchung hinzuf&uuml;gen</h2>
+      <p class="section-intro">Bitte tragen Sie Ihren Aufenthalt ein. Alle Felder mit * sind Pflichtfelder.</p>
+      <form id="booking-form" class="booking-form" novalidate>
+        <div class="form-field">
+          <label for="name">Name *</label>
+          <input id="name" name="name" type="text" required maxlength="80" autocomplete="name" />
+        </div>
+        <div class="form-field">
+          <label for="email">E-Mail *</label>
+          <input id="email" name="email" type="email" required autocomplete="email" />
+        </div>
+        <div class="form-field">
+          <label for="from">Anreise *</label>
+          <input id="from" name="from" type="date" required />
+        </div>
+        <div class="form-field">
+          <label for="to">Abreise *</label>
+          <input id="to" name="to" type="date" required />
+        </div>
+        <div class="form-field">
+          <label for="note">Notiz</label>
+          <textarea id="note" name="note" rows="3" maxlength="300" placeholder="Optional: Hinweise f&uuml;r die Familie"></textarea>
+        </div>
+        <div class="form-field honeypot" aria-hidden="true">
+          <label for="homepage">Ihre Webseite</label>
+          <input id="homepage" name="homepage" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="button primary">Buchung speichern</button>
+        </div>
+        <p id="form-message" class="form-message" role="alert"></p>
+      </form>
+    </section>
+  </main>
+
+  <template id="tooltip-template">
+    <div class="tooltip" role="presentation">
+      <p class="tooltip-name"></p>
+      <p class="tooltip-dates"></p>
+      <p class="tooltip-note"></p>
+      <button type="button" class="tooltip-delete button secondary hidden">Buchung l&ouml;schen</button>
+    </div>
+  </template>
+
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@6.1.13/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@6.1.13/index.global.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/multimonth@6.1.13/index.global.min.js"></script>
+  <script type="module" src="./assets/app.js"></script>
+</body>
+</html>
