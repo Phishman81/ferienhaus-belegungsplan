@@ -10,7 +10,7 @@ export const firebaseConfig = {
 };
 
 // App Check Site Key (den bekommst du gleich, wenn du App Check aktivierst)
-export const appCheckSiteKey = "YOUR_APPCHECK_SITE_KEY";
+export const appCheckSiteKey = "6LdI89ErAAAAACbtTIWXJ4KMkO_PXYzKHzk-0VSX";
 
 // Whitelist der Besitzer-E-Mails
 export const ownerWhitelist = [
