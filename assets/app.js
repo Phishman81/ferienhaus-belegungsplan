@@ -12,6 +12,8 @@ import {
 import * as CONFIG from "./config.js"; // <-- erzwingt echte config.js
 
 const firebaseConfig = CONFIG.firebaseConfig;
+console.log("firebaseConfig at runtime:", firebaseConfig);
+
 
 
 const firebaseApp = initializeApp(firebaseConfig);
@@ -342,5 +344,6 @@ function formatFirebaseError(error) {
   }
   return "Aktion fehlgeschlagen. Bitte sp&auml;ter erneut versuchen.";
 }
+
 
 
