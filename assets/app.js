@@ -1,3 +1,5 @@
+// app.js
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { initAuth } from "./auth.js";
 import { initData } from "./data.js";
@@ -9,17 +11,16 @@ import {
   waitForMinimumDelay
 } from "./security.js";
 
-import * as CONFIG from "./config.js"; // <-- erzwingt echte config.js
+import * as CONFIG from "./config.js"; // immer echte Config laden
 
-const firebaseConfig = CONFIG.firebaseConfig;
-console.log("firebaseConfig at runtime:", firebaseConfig);
-
-
-
-const firebaseApp = initializeApp(firebaseConfig);
+// Firebase + App Check initialisieren
+const firebaseApp = initializeApp(CONFIG.firebaseConfig);
 initAppCheckGuard(firebaseApp, CONFIG.appCheckSiteKey);
 
-const authService = initAuth(firebaseApp, CONFIG.ownerWhitelist || CONFIG_FALLBACK.ownerWhitelist);
+// Debug-Ausgabe, um sicherzugehen dass Keys wirklich geladen werden
+console.log("firebaseConfig at runtime:", CONFIG.firebaseConfig);
+
+const authService = initAuth(firebaseApp, CONFIG.ownerWhitelist);
 await authService.completeSignInIfNeeded().catch((error) => {
   console.error("Anmeldung konnte nicht abgeschlossen werden", error);
 });
@@ -81,15 +82,6 @@ window.addEventListener("beforeunload", () => {
 
 updateAuthUI();
 
-async function importConfig() {
-  try {
-    return await import("./config.js");
-  } catch (error) {
-    console.warn("config.js nicht gefunden, verwende config.sample.js", error);
-    return CONFIG_FALLBACK;
-  }
-}
-
 async function handleLoginSubmit(event) {
   event.preventDefault();
   clearMessage(dom.loginMessage);
@@ -102,7 +94,7 @@ async function handleLoginSubmit(event) {
 
   try {
     await authService.sendMagicLink(email);
-    setMessage(dom.loginMessage, "Login-Link gesendet. Bitte E-Mail-Postfach pr&uuml;fen.", "success");
+    setMessage(dom.loginMessage, "Login-Link gesendet. Bitte E-Mail-Postfach prüfen.", "success");
     dom.loginForm.classList.add("hidden");
   } catch (error) {
     console.error("Login-Link konnte nicht gesendet werden", error);
@@ -139,12 +131,12 @@ async function handleBookingSubmit(event) {
   const honeypotValue = (formData.get("homepage") || "").trim();
 
   if (!name || !email || !from || !to) {
-    setMessage(dom.formMessage, "Bitte f&uuml;llen Sie alle Pflichtfelder aus.", "error");
+    setMessage(dom.formMessage, "Bitte füllen Sie alle Pflichtfelder aus.", "error");
     return;
   }
 
   if (!validateHoneypot(honeypotValue)) {
-    setMessage(dom.formMessage, "Sicherheitspr&uuml;fung fehlgeschlagen.", "error");
+    setMessage(dom.formMessage, "Sicherheitsprüfung fehlgeschlagen.", "error");
     return;
   }
 
@@ -154,7 +146,7 @@ async function handleBookingSubmit(event) {
   }
 
   if (hasConflict(from, to)) {
-    setMessage(dom.formMessage, "Der Zeitraum &uuml;berschneidet sich mit einer bestehenden Buchung.", "error");
+    setMessage(dom.formMessage, "Der Zeitraum überschneidet sich mit einer bestehenden Buchung.", "error");
     return;
   }
 
@@ -193,14 +185,14 @@ async function handleBookingSubmit(event) {
 
 async function handleDeleteBooking(bookingId) {
   if (!state.isOwner) {
-    setMessage(dom.formMessage, "Nur Besitzer k&ouml;nnen Buchungen l&ouml;schen.", "error");
+    setMessage(dom.formMessage, "Nur Besitzer können Buchungen löschen.", "error");
     return;
   }
   try {
     await dataService.deleteBooking(bookingId);
-    setMessage(dom.formMessage, "Buchung gel&ouml;scht.", "success");
+    setMessage(dom.formMessage, "Buchung gelöscht.", "success");
   } catch (error) {
-    console.error("Buchung konnte nicht gel&ouml;scht werden", error);
+    console.error("Buchung konnte nicht gelöscht werden", error);
     setMessage(dom.formMessage, formatFirebaseError(error), "error");
   }
 }
@@ -342,8 +334,5 @@ function formatFirebaseError(error) {
   if (typeof error.message === "string") {
     return error.message;
   }
-  return "Aktion fehlgeschlagen. Bitte sp&auml;ter erneut versuchen.";
+  return "Aktion fehlgeschlagen. Bitte später erneut versuchen.";
 }
-
-
-
