@@ -1,7 +1,7 @@
 // assets/config.js
 
 export const firebaseConfig = {
-  apiKey: "AIzaSyD4gJfp1166c_y3Q1--NQLJ_pLhhh_k-8",
+  apiKey: "AIzaSyD4gFjMp1166C_y3Q1--NQLJ_pLhhh_k-8",
   authDomain: "ferienhaus-belegungsplan.firebaseapp.com",
   projectId: "ferienhaus-belegungsplan",
   storageBucket: "ferienhaus-belegungsplan.appspot.com",
