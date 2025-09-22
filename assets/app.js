@@ -9,12 +9,13 @@ import {
   waitForMinimumDelay
 } from "./security.js";
 
-const CONFIG_FALLBACK = await import("./config.sample.js");
-const CONFIG = await importConfig();
-const firebaseConfig = CONFIG.firebaseConfig || CONFIG_FALLBACK.firebaseConfig;
+import * as CONFIG from "./config.js"; // <-- erzwingt echte config.js
+
+const firebaseConfig = CONFIG.firebaseConfig;
+
 
 const firebaseApp = initializeApp(firebaseConfig);
-initAppCheckGuard(firebaseApp, CONFIG.appCheckSiteKey || CONFIG_FALLBACK.appCheckSiteKey);
+initAppCheckGuard(firebaseApp, CONFIG.appCheckSiteKey);
 
 const authService = initAuth(firebaseApp, CONFIG.ownerWhitelist || CONFIG_FALLBACK.ownerWhitelist);
 await authService.completeSignInIfNeeded().catch((error) => {
@@ -341,4 +342,5 @@ function formatFirebaseError(error) {
   }
   return "Aktion fehlgeschlagen. Bitte sp&auml;ter erneut versuchen.";
 }
+
 
