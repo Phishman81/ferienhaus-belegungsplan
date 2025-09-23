@@ -40,7 +40,7 @@
           <input id="login-email" name="login-email" type="email" autocomplete="email" required placeholder="beispiel@familie.de" />
           <button type="submit" class="button primary">Login-Link senden</button>
         </div>
-        <p class="form-hint">Sie erhalten einen sicheren Anmeldelink per E-Mail.</p>
+        <p class="form-hint">Du bekommst einen sicheren Anmeldelink per E-Mail. Bitte prüfe auch den Spam-Ordner.</p>
       </form>
       <p id="login-message" class="form-message" role="status"></p>
     </div>
@@ -64,9 +64,9 @@
       <div id="calendar" class="calendar"></div>
     </section>
 
-    <section class="form-section" aria-label="Neue Buchung">
-      <h2>Buchung hinzuf&uuml;gen</h2>
-      <p class="section-intro">Bitte tragen Sie Ihren Aufenthalt ein. Alle Felder mit * sind Pflichtfelder.</p>
+    <section class="form-section" aria-label="Neuer Eintrag">
+      <h2>Eintrag hinzuf&uuml;gen</h2>
+      <p class="section-intro">Bitte trage deinen Aufenthalt ein. Alle Felder mit * sind Pflichtfelder.</p>
       <form id="booking-form" class="booking-form" novalidate>
         <div class="form-field">
           <label for="name">Name *</label>
@@ -86,14 +86,14 @@
         </div>
         <div class="form-field">
           <label for="note">Notiz</label>
-          <textarea id="note" name="note" rows="3" maxlength="300" placeholder="Optional: Hinweise f&uuml;r die Familie"></textarea>
+          <textarea id="note" name="note" rows="3" maxlength="300" placeholder="Optional: Hinweise oder Infos"></textarea>
         </div>
         <div class="form-field honeypot" aria-hidden="true">
           <label for="homepage">Ihre Webseite</label>
           <input id="homepage" name="homepage" type="text" tabindex="-1" autocomplete="off" />
         </div>
         <div class="form-actions">
-          <button type="submit" class="button primary">Buchung speichern</button>
+          <button type="submit" class="button primary">Eintrag speichern</button>
         </div>
         <p id="form-message" class="form-message" role="alert"></p>
       </form>
@@ -105,7 +105,7 @@
       <p class="tooltip-name"></p>
       <p class="tooltip-dates"></p>
       <p class="tooltip-note"></p>
-      <button type="button" class="tooltip-delete button secondary hidden">Buchung l&ouml;schen</button>
+      <button type="button" class="tooltip-delete button secondary hidden">Eintrag l&ouml;schen</button>
     </div>
   </template>
 
@@ -115,6 +115,7 @@
   <script type="module" src="./assets/app.js"></script>
 </body>
 </html>
+
 
 
 
