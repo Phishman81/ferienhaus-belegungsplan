@@ -88,13 +88,13 @@ async function handleLoginSubmit(event) {
 
   const email = dom.loginEmailInput.value.trim();
   if (!email) {
-    setMessage(dom.loginMessage, "Bitte geben Sie eine E-Mail-Adresse ein.", "error");
+    setMessage(dom.loginMessage, "Bitte gebe deine E-Mail-Adresse ein.", "error");
     return;
   }
 
   try {
     await authService.sendMagicLink(email);
-    setMessage(dom.loginMessage, "Login-Link gesendet. Bitte E-Mail-Postfach prüfen.", "success");
+    setMessage(dom.loginMessage, "Login-Link gesendet. Bitte E-Mail-Postfach prüfen, auch im Spam-Ordner kucken.", "success");
     dom.loginForm.classList.add("hidden");
   } catch (error) {
     console.error("Login-Link konnte nicht gesendet werden", error);
@@ -106,7 +106,7 @@ async function handleLogout() {
   clearMessage(dom.loginMessage);
   try {
     await authService.signOut();
-    setMessage(dom.loginMessage, "Sie haben sich abgemeldet.", "success");
+    setMessage(dom.loginMessage, "Du hast dich abgemeldet.", "success");
   } catch (error) {
     console.error("Abmelden fehlgeschlagen", error);
     setMessage(dom.loginMessage, formatFirebaseError(error), "error");
@@ -118,7 +118,7 @@ async function handleBookingSubmit(event) {
   clearMessage(dom.formMessage);
 
   if (!state.user) {
-    setMessage(dom.formMessage, "Bitte melden Sie sich an, bevor Sie eine Buchung speichern.", "error");
+    setMessage(dom.formMessage, "Bitte melde dich an, bevor du einen Eintrag speicherst.", "error");
     return;
   }
 
@@ -131,7 +131,7 @@ async function handleBookingSubmit(event) {
   const honeypotValue = (formData.get("homepage") || "").trim();
 
   if (!name || !email || !from || !to) {
-    setMessage(dom.formMessage, "Bitte füllen Sie alle Pflichtfelder aus.", "error");
+    setMessage(dom.formMessage, "Bitte fülle die Pflichtfelder aus.", "error");
     return;
   }
 
@@ -146,14 +146,14 @@ async function handleBookingSubmit(event) {
   }
 
   if (hasConflict(from, to)) {
-    setMessage(dom.formMessage, "Der Zeitraum überschneidet sich mit einer bestehenden Buchung.", "error");
+    setMessage(dom.formMessage, "Der Zeitraum überschneidet sich mit einem bestehenden Eintrag.", "error");
     return;
   }
 
   const rateCheck = rateLimiter.canAttempt(email || state.user.email);
   if (!rateCheck.allowed) {
     const minutes = Math.ceil((rateCheck.retryIn || 0) / 60000);
-    setMessage(dom.formMessage, `Zu viele Buchungen. Bitte versuchen Sie es in ${minutes} Minute(n) erneut.`, "error");
+    setMessage(dom.formMessage, `Zu viele Einträge. Bitte versuche es in ${minutes} Minute(n) erneut.`, "error");
     return;
   }
 
@@ -173,26 +173,26 @@ async function handleBookingSubmit(event) {
     rateLimiter.recordAttempt(email || state.user.email);
     dom.bookingForm.reset();
     syncFormEmail();
-    setMessage(dom.formMessage, "Buchung gespeichert. Vielen Dank!", "success");
+    setMessage(dom.formMessage, "Eintrag gespeichert. Grazie mille!", "success");
   } catch (error) {
-    console.error("Buchung konnte nicht erstellt werden", error);
+    console.error("Eintrag konnte nicht erstellt werden", error);
     setMessage(dom.formMessage, formatFirebaseError(error), "error");
   } finally {
     dom.submitButton.disabled = false;
-    dom.submitButton.textContent = "Buchung speichern";
+    dom.submitButton.textContent = "Eintrag speichern";
   }
 }
 
 async function handleDeleteBooking(bookingId) {
   if (!state.isOwner) {
-    setMessage(dom.formMessage, "Nur Besitzer können Buchungen löschen.", "error");
+    setMessage(dom.formMessage, "Nur Besitzer können Einträge löschen.", "error");
     return;
   }
   try {
     await dataService.deleteBooking(bookingId);
-    setMessage(dom.formMessage, "Buchung gelöscht.", "success");
+    setMessage(dom.formMessage, "Eintrag gelöscht.", "success");
   } catch (error) {
-    console.error("Buchung konnte nicht gelöscht werden", error);
+    console.error("Eintrag konnte nicht gelöscht werden", error);
     setMessage(dom.formMessage, formatFirebaseError(error), "error");
   }
 }
@@ -336,3 +336,4 @@ function formatFirebaseError(error) {
   }
   return "Aktion fehlgeschlagen. Bitte später erneut versuchen.";
 }
+
