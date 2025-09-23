@@ -10,6 +10,7 @@
   --border-radius: 10px;
   --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
 }
+
 * {
   box-sizing: border-box;
 }
@@ -44,10 +45,41 @@ a {
   font-size: 1.75rem;
 }
 
+/* --- Tagline/Intro-Karte oben im Header --- */
 .tagline {
-  margin: 0.25rem 0 0;
+  margin: 0.5rem 0 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--border-radius);
+
+  /* Fallback zuerst */
+  background: rgba(31, 122, 140, 0.08);
+  border: 1px solid rgba(31, 122, 140, 0.22);
+
+  /* Moderne Browser überschreiben */
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  border-color: color-mix(in srgb, var(--color-primary) 22%, #ffffff);
+
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 0.98rem;
+  box-shadow: 0 6px 18px rgba(31, 122, 140, 0.08);
+}
+
+.tagline strong {
+  color: var(--color-primary-dark);
+}
+
+.tagline em {
   color: var(--color-muted);
-  font-size: 0.95rem;
+  font-style: italic;
+}
+
+/* etwas mehr Luft auf großen Screens */
+@media (min-width: 960px) {
+  .tagline {
+    padding: 1.1rem 1.4rem;
+    font-size: 1rem;
+  }
 }
 
 .auth-panel {
@@ -361,6 +393,7 @@ a {
 .fc .fc-multimonth .fc-daygrid-more-link {
   font-size: 0.7rem;
 }
+
 @media (min-width: 960px) {
   .app-header {
     flex-direction: row;
@@ -379,6 +412,7 @@ a {
     justify-content: space-between;
     align-items: center;
   }
+
   .section-controls {
     flex-direction: row;
     align-items: center;
@@ -397,38 +431,3 @@ a {
     scroll-behavior: auto !important;
   }
 }
-
-/* --- Tagline/Intro-Karte oben im Header --- */
-.tagline {
-  margin: 0.5rem 0 0;
-  padding: 1rem 1.25rem;
-  border-radius: var(--border-radius);
-  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
-  /* Fallback für Browser ohne color-mix: */
-  background: rgba(31, 122, 140, 0.08);
-  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, #ffffff);
-  /* Fallback: */
-  border-color: rgba(31, 122, 140, 0.22);
-  color: var(--color-text);
-  line-height: 1.6;
-  font-size: 0.98rem;
-  box-shadow: 0 6px 18px rgba(31, 122, 140, 0.08);
-}
-
-.tagline strong {
-  color: var(--color-primary-dark);
-}
-
-.tagline em {
-  color: var(--color-muted);
-  font-style: italic;
-}
-
-/* etwas mehr Luft auf großen Screens */
-@media (min-width: 960px) {
-  .tagline {
-    padding: 1.1rem 1.4rem;
-    font-size: 1rem;
-  }
-}
-
