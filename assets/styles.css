@@ -19,9 +19,11 @@ body {
   margin: 0;
   font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: var(--color-bg) url("./assets/gardasee.jpg") no-repeat center center fixed;
+  background-size: cover;
   line-height: 1.5;
 }
+
 
 a {
   color: var(--color-primary);
@@ -431,3 +433,4 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
