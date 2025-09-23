@@ -398,3 +398,37 @@ a {
   }
 }
 
+/* --- Tagline/Intro-Karte oben im Header --- */
+.tagline {
+  margin: 0.5rem 0 0;
+  padding: 1rem 1.25rem;
+  border-radius: var(--border-radius);
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  /* Fallback für Browser ohne color-mix: */
+  background: rgba(31, 122, 140, 0.08);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, #ffffff);
+  /* Fallback: */
+  border-color: rgba(31, 122, 140, 0.22);
+  color: var(--color-text);
+  line-height: 1.6;
+  font-size: 0.98rem;
+  box-shadow: 0 6px 18px rgba(31, 122, 140, 0.08);
+}
+
+.tagline strong {
+  color: var(--color-primary-dark);
+}
+
+.tagline em {
+  color: var(--color-muted);
+  font-style: italic;
+}
+
+/* etwas mehr Luft auf großen Screens */
+@media (min-width: 960px) {
+  .tagline {
+    padding: 1.1rem 1.4rem;
+    font-size: 1rem;
+  }
+}
+
