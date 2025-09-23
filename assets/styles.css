@@ -9,7 +9,7 @@
   --color-success: #2f855a;
   --border-radius: 10px;
   --shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
-
+}
 * {
   box-sizing: border-box;
 }
@@ -397,3 +397,4 @@ a {
     scroll-behavior: auto !important;
   }
 }
+
